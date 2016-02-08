@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Subject;
 use App\Category;
 use App\Http\Requests\SubjectRequest;
+use App\Http\Requests\QuestionRequest;
+use App\Question;
 class SubjectController extends Controller
 {
     public function getIndex(){
@@ -71,14 +73,20 @@ class SubjectController extends Controller
 
     public function getQuestions($id){
         $subject = Subject::findOrFail($id);
-        $title = "Manage questions for '".$subject->name."' subject (Category: ".$subject->category->name.") ".$subject->duration." min ";
-        $answers = [1, 2, 3, 4];
-        $questions = Question::all();
-        return view('subject.questions', compact('subject', 'title', 'answers', 'questions'));
+        $title = "Manage questions";
+        $answer = ['1'=>1, '2'=>2,'3'=> 3,'4'=> 4];
+        $questions = $subject->questions;
+        //dd($questions);
+        return view('subject.questions', compact('subject', 'title', 'answer', 'questions'));
     }
 
 
-    public function postNewQuestion(){
-
+    public function postNewQuestion($id, QuestionRequest $req){
+        $subj = Subject::find($id);
+        $quest = new Question($req->all());
+        //dd($quest);
+        $subj->questions()->save($quest);
+        session()->flash('flash_mess', 'Question was added successfully.');
+        return redirect(action('SubjectController@getQuestions', ['id'=>$subj->id]));
     }
 }

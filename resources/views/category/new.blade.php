@@ -27,11 +27,5 @@
     {!! Form::close() !!}
 
 
-
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> Questions added</div>
-
-    </div>
 @endsection
 

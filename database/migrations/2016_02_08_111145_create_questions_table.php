@@ -14,6 +14,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('subject_id');
             $table->text('question');
             $table->text('option1');
             $table->text('option2');
@@ -23,14 +24,7 @@ class CreateQuestionsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('subject_question', function(Blueprint $table){
-            $table->increments('id');
-            $table->integer('subject_id')->unsigned()->index();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->integer('question_id')->unsigned()->index();
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->timestamps();
-        });
+
     }
 
     /**
@@ -40,7 +34,7 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subject_question');
+
         Schema::drop('questions');
     }
 }

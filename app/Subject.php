@@ -11,4 +11,8 @@ class Subject extends Model
     public function category(){
         return $this->belongsTo('App\Category');
     }
+
+    public function questions(){
+        return $this->hasMany('App\Question');
+    }
 }
