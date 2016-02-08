@@ -18,7 +18,7 @@
     @include('errors.list')
 
     {!! Form::open(['action'=>['SubjectController@postNewQuestion', $subject->id], 'method'=>'POST', 'class'=>'form-horizontal', 'id'=>'add-new-question'])!!}
-    @yield('form')
+    @include('subject.formquestion')
 
     @if(!$questions->isEmpty())
     <div class="panel panel-default">
@@ -27,7 +27,6 @@
 
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         @foreach($questions as $question)
-
 
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="heading{{$question->id}}">
@@ -46,10 +45,8 @@
                     </div>
                 </div>
 
-
-
-        </div>
         @endforeach
+        </div>
     </div>
     @endif
 @stop
