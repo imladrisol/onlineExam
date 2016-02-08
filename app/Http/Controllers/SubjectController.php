@@ -97,4 +97,12 @@ class SubjectController extends Controller
         session()->flash('flash_mess', 'Question #'.$question->id.' was changed completely');
         return redirect(action('SubjectController@getQuestions', $question->subject->id));
     }
+
+    public function getDeleteQuestion($id){
+        $subj_id = Question::find($id)->subject->id;
+        Question::destroy($id);
+        session()->flash('flash_mess', 'Question #'.$id.' was deleted');
+        return redirect(action('SubjectController@getQuestions',$subj_id));
+
+    }
 }

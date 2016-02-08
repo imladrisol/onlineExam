@@ -43,9 +43,16 @@
     </div>
     {!! Form::token() !!}
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-offset-2 col-sm-2">
             {!! Form::submit('Update question', ['class'=>'btn btn-primary']) !!}
+
         </div>
+        @if(isset($question))
+        <div class="col-sm-offset-1 col-sm-2">
+            <a class="btn btn-danger" id="btn-delete" href="{{action('SubjectController@getDeleteQuestion', [$question->id])}}">Delete</a>
+
+        </div>
+        @endif
     </div>
     {!! Form::close()!!}
 
