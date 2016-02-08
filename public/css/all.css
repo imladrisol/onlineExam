@@ -1,0 +1,20 @@
+.navbar-brand{
+    font-size : 16px!important;
+}
+#manager-menu>li{
+    //display: block!important;
+    //margin-right: 0px;
+    width: 160px;
+}
+
+#manager-menu>li>a{
+    display: inline!important;
+    //padding: 0;
+
+    padding-left: 10px!important;
+    //padding-right: inherit !important;
+}
+#manager-menu>li>span{
+    padding-left: 10px;
+
+}

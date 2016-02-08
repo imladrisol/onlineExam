@@ -1,0 +1,57 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'sweetalert' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose install initial load of C:\MyWorkspace\excersice\onlineExam\package.json
+5 verbose readDependencies loading dependencies from C:\MyWorkspace\excersice\onlineExam\package.json
+6 silly cache add args [ 'sweetalert', null ]
+7 verbose cache add spec sweetalert
+8 silly cache add parsed spec { raw: 'sweetalert',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'sweetalert',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed sweetalert@*
+10 verbose addNamed "*" is a valid semver range for sweetalert
+11 silly addNameRange { name: 'sweetalert', range: '*', hasData: false }
+12 silly mapToRegistry name sweetalert
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry http://registry.npmjs.org/
+15 silly mapToRegistry uri http://registry.npmjs.org/sweetalert
+16 verbose addNameRange registry:http://registry.npmjs.org/sweetalert not in flight; fetching
+17 verbose request uri http://registry.npmjs.org/sweetalert
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 11:19:03
+20 verbose request id 388078ca980a1e45
+21 http request GET http://registry.npmjs.org/sweetalert
+22 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+23 info attempt registry request try #2 at 11:19:14
+24 http request GET http://registry.npmjs.org/sweetalert
+25 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+26 info attempt registry request try #3 at 11:20:15
+27 http request GET http://registry.npmjs.org/sweetalert
+28 verbose stack Error: connect ECONNREFUSED
+28 verbose stack     at exports._errnoException (util.js:746:11)
+28 verbose stack     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1010:19)
+29 verbose cwd C:\MyWorkspace\excersice\onlineExam
+30 error Windows_NT 6.3.9600
+31 error argv "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "sweetalert"
+32 error node v0.12.7
+33 error npm  v2.11.3
+34 error code ECONNREFUSED
+35 error errno ECONNREFUSED
+36 error syscall connect
+37 error Error: connect ECONNREFUSED
+37 error     at exports._errnoException (util.js:746:11)
+37 error     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1010:19)
+37 error  { [Error: connect ECONNREFUSED]
+37 error   code: 'ECONNREFUSED',
+37 error   errno: 'ECONNREFUSED',
+37 error   syscall: 'connect' }
+38 error If you are behind a proxy, please make sure that the
+38 error 'proxy' config is set properly.  See: 'npm help config'
+39 verbose exit [ 1, true ]
