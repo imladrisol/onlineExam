@@ -89,4 +89,8 @@ class SubjectController extends Controller
         session()->flash('flash_mess', 'Question was added successfully.');
         return redirect(action('SubjectController@getQuestions', ['id'=>$subj->id]));
     }
+
+    public function postEditQuestion($id){
+
+    }
 }
