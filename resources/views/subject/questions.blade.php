@@ -30,14 +30,14 @@
 
 
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
+                    <div class="panel-heading" role="tab" id="heading{{$question->id}}">
                         <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$question->id}}" aria-expanded="false" aria-controls="collapse{{$question->id}}">
                                 Question #{{$question->id}}
                             </a>
                         </h4>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div id="collapse{{$question->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$question->id}}">
                         <div class="panel-body">
                             {!! Form::model($question, ['action'=>['SubjectController@postEditQuestion', $question->id], 'method'=>'POST', 'class'=>'form-horizontal', 'id'=>'add-new-question'])!!}
                             @include('subject.formquestion')

@@ -90,7 +90,11 @@ class SubjectController extends Controller
         return redirect(action('SubjectController@getQuestions', ['id'=>$subj->id]));
     }
 
-    public function postEditQuestion($id){
+    public function postEditQuestion($id, QuestionRequest $req){
+        $question = Question::findOrFail($id);
+        $question->update($req->all());
 
+        session()->flash('flash_mess', 'Question #'.$question->id.' was changed completely');
+        return redirect(action('SubjectController@getQuestions', $question->subject->id));
     }
 }
