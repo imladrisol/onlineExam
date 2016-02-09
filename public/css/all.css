@@ -18,3 +18,11 @@
     padding-left: 10px;
 
 }
+
+#counter1{
+    margin-left: 50%;
+}
+
+#answer-radio li{
+    list-style: none;
+}

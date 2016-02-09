@@ -65,6 +65,9 @@
                         <a href="{{action('UserController@getIndex')}}">Users</a>
                     </li>
                     <li>
+                        <a href="{{action('SubjectController@getStartTest',1)}}">Start Test</a>
+                    </li>
+                    <li>
                         <a href="">Exam Results</a>
                     </li>
                 </ul>
@@ -102,6 +105,7 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/jquery.countdown.js')}}"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script src="{{asset('js/sweetalert.min.js')}}"></script>
     <script>
@@ -134,6 +138,20 @@
         $('#btn-add-new-question').on('click', function(){
             $('#add-new-question').slideDown();
         });
+
+        $(document).ready(function() {
+            $('#counter1').countdown({
+                startTime: "10:0",
+                stepTime: 1,
+                image: "{{asset('digits.png')}}",
+                timerEnd: function(){
+                    alert('end!!');
+                    //redirect to somewhere
+                }
+            });
+        });
+
+        @yield('script_form')
     </script>
 </body>
 </html>

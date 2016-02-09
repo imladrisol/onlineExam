@@ -19,6 +19,10 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         Route::controller('category', 'CategoryController');
+        //Route::get('subject/{id}/start-test', 'SubjectController@getStartTest');
+        Route::get('subject/save-question-result/{id}', 'SubjectController@postSaveQuestionResult');
+        Route::get('subject/{id}/start', 'SubjectController@getBeforeStartTest');
+
         Route::controller('subject', 'SubjectController');
         Route::controller('user', 'UserController');
     });

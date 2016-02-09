@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Subject;
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Http\Requests\SubjectRequest;
 use App\Http\Requests\QuestionRequest;
@@ -105,4 +106,42 @@ class SubjectController extends Controller
         return redirect(action('SubjectController@getQuestions',$subj_id));
 
     }
+
+    public function getBeforeStartTest($id){
+        $subject = Subject::find($id);
+        return view('subject.start', compact('subject'));
+    }
+
+    public function getStartTest($id){
+        $subject = Subject::find($id);
+        $questions = $subject->questions()->get();
+        $first_question_id = $subject->questions()->min('id');
+
+
+        if(session('next_question_id')){
+            $current_question_id = session('next_question_id');
+        }
+        else{
+            $current_question_id = $first_question_id;
+            session(['next_question_id'=>$current_question_id]);
+        }
+        return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id'));
+    }
+
+
+    public function postSaveQuestionResult($id, Request $req){
+        //save result
+        $subject = Subject::find($id);
+        //dd($req->all());
+        if($req->get('option') != null){
+            //dd(Auth::user()->id);
+            //dd($id);
+            //dd();
+            //save the answer into table
+        }
+
+        $next_question_id = $subject->questions()->where('id','>', $req->get('question_id'))->min('id');
+        echo $next_question_id;
+    }
+
 }
