@@ -20,7 +20,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::controller('category', 'CategoryController');
         Route::controller('subject', 'SubjectController');
-
+        Route::controller('user', 'UserController');
     });
 });
 

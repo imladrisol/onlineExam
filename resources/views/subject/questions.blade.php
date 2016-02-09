@@ -11,7 +11,8 @@
 
     </div>
     <br>
-    <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-arrow-left"></span> Back to subjects</button>
+    <a class="btn btn-warning" href="{{action('SubjectController@getIndex')}}"><span class="glyphicon glyphicon-arrow-left"></span> Back to subjects</a>
+
     <button type="button" class="btn btn-primary" id="btn-add-new-question"><span class="glyphicon glyphicon-plus"></span> Add new question</button>
 <br><br><br>
 

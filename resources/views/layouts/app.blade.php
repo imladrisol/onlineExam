@@ -62,7 +62,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="">Users</a>
+                        <a href="{{action('UserController@getIndex')}}">Users</a>
                     </li>
                     <li>
                         <a href="">Exam Results</a>
