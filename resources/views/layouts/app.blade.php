@@ -139,16 +139,10 @@
             $('#add-new-question').slideDown();
         });
 
-        $(document).ready(function() {
-            $('#counter1').countdown({
-                startTime: "10:0",
-                stepTime: 1,
-                image: "{{asset('digits.png')}}",
-                timerEnd: function(){
-                    alert('end!!');
-                    //redirect to somewhere
-                }
-            });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
         });
 
         @yield('script_form')

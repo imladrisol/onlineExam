@@ -39,13 +39,13 @@
             </div>
         </ul>
 
-        {!! Form::input('hidden','question_id', 3) !!}
+        {!! Form::input('hidden','question_id', $question->id) !!}
 
         {!! Form::token() !!}
 
 
     @if($question->id != $first_question_id)
-            <a class="btn btn-info" href="#" role="button"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a>
+            <!--a class="btn btn-info" href="#" id="previous-btn" role="button"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a-->
         @endif
         <!--a class="btn btn-info" href="{{action('SubjectController@postSaveQuestionResult',[$subject->id])}}" role="button">Next <span class="glyphicon glyphicon-chevron-right"></span></a-->
         {!! Form::submit('Next', ['class'=>'btn btn-info']) !!}
@@ -61,11 +61,25 @@
 
             $.post($formAction, $(this).serialize(), function(data){
                 $('#jumbotron{!!$question->id!!}').hide();
-                $('#jumbotron'+data).show();
+                //console.log(data.next_question_id);
+                $('#jumbotron'+data.next_question_id).show();
             });
+
             e.preventDefault();
         });
     });
+/*
+    $(function() {
+        $('#counter1').countdown({
+            startTime: "10:0",
+            stepTime: 1,
+            image: "{{asset('digits.png')}}",
+            timerEnd: function(){
+                alert('end!!');
+                //redirect to somewhere
+            }
+        });
+    });*/
 @stop
 @endforeach
 

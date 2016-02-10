@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Subject;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Category;
+use App\Answer;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SubjectRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
@@ -132,16 +135,36 @@ class SubjectController extends Controller
     public function postSaveQuestionResult($id, Request $req){
         //save result
         $subject = Subject::find($id);
+        $question = Question::find($req->get('question_id'));
+       // dd($question);
         //dd($req->all());
         if($req->get('option') != null){
             //dd(Auth::user()->id);
             //dd($id);
             //dd();
             //save the answer into table
+            Answer::create([
+                'subject_id' => $id,
+                'user_answer'=>$req->get('option'),
+                'question' => $question->question,
+                'option1' => $question->option1,
+            'option2' => $question->option2,
+            'option3' => $question->option3,
+            'option4' => $question->option4,
+            'right_answer'=>$question->answer
+            ]);
         }
 
-        $next_question_id = $subject->questions()->where('id','>', $req->get('question_id'))->min('id');
-        echo $next_question_id;
+        $previous_question_id = $subject->questions()->where('id','<',$req->get('question_id'))->max('id');
+        $next_question_id = $subject->questions()->where('id','>',$req->get('question_id'))->min('id');
+        return [/*'previous_question_id'=>$previous_question_id,*/'next_question_id'=>$next_question_id];
     }
 
+    public function getUpdateQuestionResult(){
+
+    }
+
+    public function postUpdateQuestionResult(){
+
+    }
 }
