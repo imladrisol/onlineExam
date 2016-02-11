@@ -120,7 +120,7 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
         $questions = $subject->questions()->get();
         $first_question_id = $subject->questions()->min('id');
-
+        $last_question_id = $subject->questions()->max('id');
 
         if(session('next_question_id')){
             $current_question_id = session('next_question_id');
@@ -129,7 +129,7 @@ class SubjectController extends Controller
             $current_question_id = $first_question_id;
             session(['next_question_id'=>$current_question_id]);
         }
-        return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id'));
+        return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id', 'last_question_id'));
     }
 
 
@@ -167,8 +167,8 @@ class SubjectController extends Controller
                 'next_question_id' => $next_question_id];
         }
         else{
-            session()->flash('flash_mess', 'You\'ve done the '.$subject->name.'!');
-            return redirect()->route('result',['id'=>$id])->with('flash_mess');
+            //session()->flash('flash_mess', 'You\'ve done the '.$subject->name.'!');
+            return redirect()->route('result',['id'=>$id]);
         }
 
     }
@@ -184,10 +184,11 @@ class SubjectController extends Controller
         }
 
         $cnt_right_answ = $cnt_right_answ;
-        $persetnages = $cnt_right_answ*100/$cnt;
+        $persetnages = ceil($cnt_right_answ*100/$cnt);
         $time_taken = gmdate("H:i:s",Answer::whereSubjectId($id)->orderBy('id', 'desc')->first()->time_taken);
         //dd($answers);
         $title = 'Results of test';
+        session()->flash('flash_mess', 'Your Exam data has been saved successfully');
         return view('subject.result', compact('subject', 'title','cnt','cnt_right_answ', 'persetnages','time_taken'));
     }
 

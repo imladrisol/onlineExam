@@ -71,7 +71,11 @@
         @endif
         <!--a class="btn btn-info" href="{{action('SubjectController@postSaveQuestionResult',[$subject->id])}}" role="button">Next <span class="glyphicon glyphicon-chevron-right"></span></a-->
 
-        {!! Form::submit('Next', ['class'=>'btn btn-info']) !!}
+        @if($question->id == $last_question_id)
+        {!! Form::submit('Last', ['class'=>'btn btn-info']) !!}
+        @else
+            {!! Form::submit('Next', ['class'=>'btn btn-info']) !!}
+            @endif
         {!! Form::close() !!}
     </div>
 
