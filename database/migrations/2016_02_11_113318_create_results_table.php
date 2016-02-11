@@ -14,15 +14,11 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('user_id')->index()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('subject_id')->unsigned()->index();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-
+            $table->integer('answer_id')->index()->unsigned();
+            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
             $table->time('time_taken');
-            $table->integer('total_marks');
-
             $table->timestamps();
         });
     }
