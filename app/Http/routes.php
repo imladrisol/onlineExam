@@ -23,6 +23,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('subject/save-question-result/{id}', 'SubjectController@postSaveQuestionResult');
         Route::get('subject/{id}/start', 'SubjectController@getBeforeStartTest');
 
+        Route::get('/result/{id}',['as'=>'result','uses'=>'SubjectController@getShowResultOfSubjectForGuest']);
         Route::controller('subject', 'SubjectController');
         Route::controller('user', 'UserController');
     });

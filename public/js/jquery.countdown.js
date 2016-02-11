@@ -12,8 +12,8 @@ jQuery.fn.countdown = function(userOptions) {
     // Default options
     var options = {
         stepTime: 60,
-        format: "dd:hh:mm:ss",
-        startTime: "01:12:32:55",
+        format: "mm:ss",
+        startTime: "32:55",
         digitImages: 6,
         digitWidth: 53,
         digitHeight: 77,

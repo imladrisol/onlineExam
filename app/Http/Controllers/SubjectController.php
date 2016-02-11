@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Answer;
+use App\Result;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SubjectRequest;
 use App\Http\Requests\QuestionRequest;
@@ -139,11 +140,14 @@ class SubjectController extends Controller
        // dd($question);
         //dd($req->all());
         if($req->get('option') != null){
-            //dd(Auth::user()->id);
-            //dd($id);
-            //dd();
             //save the answer into table
+            $duration = $subject->duration*60;
+            $time_taken = $req->get('time_taken'.$question->id);
+            $time_per_question = $duration - $time_taken;
+            //dd($time_taken);
             Answer::create([
+                'user_id'=>Auth::user()->id,
+                'question_id'=>$req->get('question_id'),
                 'subject_id' => $id,
                 'user_answer'=>$req->get('option'),
                 'question' => $question->question,
@@ -151,13 +155,40 @@ class SubjectController extends Controller
             'option2' => $question->option2,
             'option3' => $question->option3,
             'option4' => $question->option4,
-            'right_answer'=>$question->answer
+            'right_answer'=>$question->answer,
+                'time_taken'=>$time_per_question
             ]);
         }
 
         $previous_question_id = $subject->questions()->where('id','<',$req->get('question_id'))->max('id');
         $next_question_id = $subject->questions()->where('id','>',$req->get('question_id'))->min('id');
-        return [/*'previous_question_id'=>$previous_question_id,*/'next_question_id'=>$next_question_id];
+        if($next_question_id != null) {
+            return [/*'previous_question_id'=>$previous_question_id,*/
+                'next_question_id' => $next_question_id];
+        }
+        else{
+            session()->flash('flash_mess', 'You\'ve done the '.$subject->name.'!');
+            return redirect()->route('result',['id'=>$id])->with('flash_mess');
+        }
+
+    }
+
+    public function getShowResultOfSubjectForGuest($id){
+        $subject = Subject::findOrFail($id);
+        $answers = Answer::whereSubjectId($id)->get();
+        $cnt = $answers->count();
+        $cnt_right_answ = 0;
+        foreach($answers as $a){
+            if($a->user_answer == $a->right_answer)
+                $cnt_right_answ++;
+        }
+
+        $cnt_right_answ = $cnt_right_answ;
+        $persetnages = $cnt_right_answ*100/$cnt;
+        $time_taken = gmdate("H:i:s",Answer::whereSubjectId($id)->orderBy('id', 'desc')->first()->time_taken);
+        //dd($answers);
+        $title = 'Results of test';
+        return view('subject.result', compact('subject', 'title','cnt','cnt_right_answ', 'persetnages','time_taken'));
     }
 
     public function getUpdateQuestionResult(){

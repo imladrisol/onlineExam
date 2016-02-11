@@ -16,8 +16,8 @@ class CreateResultsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->index()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('answer_id')->index()->unsigned();
-            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
+            $table->integer('subject_id')->index()->unsigned();
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->time('time_taken');
             $table->timestamps();
         });

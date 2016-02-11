@@ -16,6 +16,7 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
+    <link rel="stylesheet" href="{{asset('css/flipclock.css')}}">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -105,7 +106,7 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.countdown.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/flipclock.min.js')}}"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script src="{{asset('js/sweetalert.min.js')}}"></script>
     <script>
@@ -144,7 +145,7 @@
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         });
-
+        @yield('script_clock')
         @yield('script_form')
     </script>
 </body>

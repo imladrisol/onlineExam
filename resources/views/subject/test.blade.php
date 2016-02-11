@@ -2,6 +2,27 @@
 
 @section('content')
     <div id="counter1"></div>
+
+@section('script_clock')
+        $(function() {
+            var clock = $('#counter1').FlipClock(600, {
+                autoStart: false,
+                countdown: true,
+                clockFace: 'MinuteCounter',
+                callbacks: {
+                 interval: function () {
+                 var time = clock.getTime().time;
+                 //alert(time);
+                @foreach($questions as $q)
+                    $('#time_taken{{$q->id}}').val(time);
+                @endforeach
+                }
+            }
+            });
+        clock.start();
+        });
+
+ @stop
 @foreach($questions as $question)
     <div class="jumbotron" id="jumbotron{{$question->id}}"
             @if($question->id != $current_question_id)
@@ -40,6 +61,7 @@
         </ul>
 
         {!! Form::input('hidden','question_id', $question->id) !!}
+        {!! Form::input('hidden','time_taken'.$question->id,null,['id'=>'time_taken'.$question->id]) !!}
 
         {!! Form::token() !!}
 
@@ -48,38 +70,46 @@
             <!--a class="btn btn-info" href="#" id="previous-btn" role="button"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a-->
         @endif
         <!--a class="btn btn-info" href="{{action('SubjectController@postSaveQuestionResult',[$subject->id])}}" role="button">Next <span class="glyphicon glyphicon-chevron-right"></span></a-->
+
         {!! Form::submit('Next', ['class'=>'btn btn-info']) !!}
         {!! Form::close() !!}
     </div>
 
 @section('script_form')
     $(function() {
-        $('#frm{!!$question->id!!}').on('submit', function(e){
+
+
+    $('#frm{!!$question->id!!}').on('submit', function(e){
+
             var form = $(this);
             var $formAction = form.attr('action');
             var $userAnswer = $('input[name=option]:checked', $('#frm{{$question->id}}')).val();
 
             $.post($formAction, $(this).serialize(), function(data){
                 $('#jumbotron{!!$question->id!!}').hide();
-                //console.log(data.next_question_id);
                 $('#jumbotron'+data.next_question_id).show();
-            });
+           });
 
             e.preventDefault();
         });
     });
-/*
+
     $(function() {
-        $('#counter1').countdown({
+        /*$('#counter1').countdown({
             startTime: "10:0",
             stepTime: 1,
             image: "{{asset('digits.png')}}",
-            timerEnd: function(){
+    timerEnd: function(){
                 alert('end!!');
                 //redirect to somewhere
             }
-        });
-    });*/
+        });*/
+
+    $(function(){
+
+
+    });
+    });
 @stop
 @endforeach
 
