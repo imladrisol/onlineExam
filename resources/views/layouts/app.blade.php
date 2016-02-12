@@ -50,8 +50,9 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                @can('admin')
+
                 <ul class="nav navbar-nav">
+                    @can('admin')
                     <li class="dropdown">
                         <a href="{{ url('/home') }}" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules  <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="manager-menu">
@@ -65,14 +66,25 @@
                     <li>
                         <a href="{{action('UserController@getIndex')}}">Users</a>
                     </li>
-                    <li>
+                    @endcan
+                    @can('guest')
+                    <!--li>
                         <a href="{{action('SubjectController@getStartTest',1)}}">Start Test</a>
+                    </li-->
+                    <li class="dropdown">
+                        <a href="{{ url('/home') }}" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose exams <span class="caret"></span></a>
+                        <ul class="dropdown-menu" id="manager-menu">
+                            @foreach(App\Subject::all() as $cat)
+                                @if($cat->hasQuestions() && $cat->isExamined())
+                                    <li><a href="{{action('SubjectController@getBeforeStartTest',$cat->id)}}">{{$cat->name}}</a></li>
+                                @endif
+                            @endforeach
+                        </ul>
                     </li>
-                    <li>
-                        <a href="">Exam Results</a>
-                    </li>
+
+                    @endcan
                 </ul>
-                @endcan
+
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

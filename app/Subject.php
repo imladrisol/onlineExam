@@ -15,4 +15,24 @@ class Subject extends Model
     public function questions(){
         return $this->hasMany('App\Question');
     }
+
+    public function hasQuestions(){
+        if($this->questions()->get()->count()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function answers(){
+        return $this->hasMany('App\Answer');
+    }
+
+    public function isExamined(){
+        if($this->answers()->get()->count()){
+            return false;
+        }
+        return true;
+    }
 }

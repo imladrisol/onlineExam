@@ -23,6 +23,7 @@
         });
 
  @stop
+
 @foreach($questions as $question)
     <div class="jumbotron" id="jumbotron{{$question->id}}"
             @if($question->id != $current_question_id)
@@ -33,7 +34,8 @@
         <p>{{$question->question}}</p>
 
         {!! Form::open(['action'=>['SubjectController@postSaveQuestionResult', $subject->id], 'method'=>'post', 'id'=>'frm'.$question->id]) !!}
-        <ul id="answer-radio">
+
+        <ul id="answer-radio{{$question->id}}">
             <div class="btn-group" data-toggle="buttons">
 
                 <li>
@@ -79,22 +81,31 @@
         {!! Form::close() !!}
     </div>
 
+    @if($questions->count()>1)
 @section('script_form')
     $(function() {
 
+    //console.log({{$question->id}});
+    //console.log({{$last_question_id}});
 
     $('#frm{!!$question->id!!}').on('submit', function(e){
-
+    e.preventDefault();
             var form = $(this);
             var $formAction = form.attr('action');
+
             var $userAnswer = $('input[name=option]:checked', $('#frm{{$question->id}}')).val();
 
+
             $.post($formAction, $(this).serialize(), function(data){
-                $('#jumbotron{!!$question->id!!}').hide();
-                $('#jumbotron'+data.next_question_id).show();
+
+                    //if(data.next_question_id != null)
+                        $('#jumbotron{{$question->id}}').hide();
+                        //console.log(data.next_question_id);
+                        $('#jumbotron' + data.next_question_id+'').show();
            });
 
-            e.preventDefault();
+
+
         });
     });
 
@@ -115,6 +126,7 @@
     });
     });
 @stop
+@endif
 @endforeach
 
 
