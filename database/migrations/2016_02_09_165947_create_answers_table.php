@@ -14,6 +14,11 @@ class CreateAnswersTable extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('question_id')->unsigned()->index();
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->integer('subject_id')->unsigned()->index();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->integer('user_answer');

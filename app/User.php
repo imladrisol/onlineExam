@@ -50,4 +50,8 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function answers(){
+        return $this->hasMany('App\Answer');
+    }
 }

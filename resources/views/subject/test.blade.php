@@ -5,22 +5,28 @@
 
 @section('script_clock')
         $(function() {
-            var clock = $('#counter1').FlipClock(600, {
+            var clock = $('#counter1').FlipClock({{$duration*60}}, {
                 autoStart: false,
                 countdown: true,
                 clockFace: 'MinuteCounter',
                 callbacks: {
-                 interval: function () {
-                 var time = clock.getTime().time;
-                 //alert(time);
-                @foreach($questions as $q)
-                    $('#time_taken{{$q->id}}').val(time);
-                @endforeach
+                     interval: function () {
+                         var time = clock.getTime().time;
+                         //alert(time);
+                        @foreach($questions as $q)
+                            $('#time_taken{{$q->id}}').val(time);
+                        @endforeach
+                    },
+                stop: function(){
+                alert("The time has run out!");
+                window.location.replace("{{ route('result', [$subject->id]) }}");
                 }
-            }
-            });
-        clock.start();
+
+        }
         });
+        clock.start();
+
+
 
  @stop
 
@@ -109,21 +115,6 @@
         });
     });
 
-    $(function() {
-        /*$('#counter1').countdown({
-            startTime: "10:0",
-            stepTime: 1,
-            image: "{{asset('digits.png')}}",
-    timerEnd: function(){
-                alert('end!!');
-                //redirect to somewhere
-            }
-        });*/
-
-    $(function(){
-
-
-    });
     });
 @stop
 @endif

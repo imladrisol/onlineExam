@@ -1,7 +1,7 @@
 @extends('layouts.view')
 
 @section('table_view')
-    @if(!$subjects->isEmpty())
+    @if(!$answers->isEmpty())
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
@@ -44,5 +44,5 @@
 @endsection
 
 @section('pagination')
-    {{$subjects->links()}}
+    {{$answers->links()}}
 @endsection

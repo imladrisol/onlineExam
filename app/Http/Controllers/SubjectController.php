@@ -11,14 +11,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Answer;
-use App\Result;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\SubjectRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Question;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Type\Collection;
+
 class SubjectController extends Controller
 {
-    public function getIndex(){
+    public function index(){
 
         $subjects = Subject::paginate(5);
         $title = "Subjects Listing";
@@ -124,7 +126,7 @@ class SubjectController extends Controller
         $first_question_id = $subject->questions()->min('id');
         //dd($first_question_id);
         $last_question_id = $subject->questions()->max('id');
-
+        $duration = $subject->duration;
         //dd(session('next_question_id'));
         if(session('next_question_id')){
             $current_question_id = session('next_question_id');
@@ -134,7 +136,7 @@ class SubjectController extends Controller
             session(['next_question_id'=>$current_question_id]);
         }
         //dd($current_question_id);
-        return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id', 'last_question_id'));
+        return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id', 'last_question_id', 'duration'));
     }
 
 
@@ -194,6 +196,45 @@ class SubjectController extends Controller
         }
     }
 
+    public function getAllSubjectsResults(){
+        $title = 'Exams Results';
+        //$answers = Answer::groupBy('subject_id')->paginate(5);
+
+/*
+        $browser_total_raw = DB::raw(
+            'max(time_taken) as time,
+            if(right_answer = user_answer, )
+            )');
+        $user_info = Answer::
+            select('answers.*', $browser_total_raw)
+            ->groupBy('subject_id')
+            ->get();
+        dd($user_info);*/
+/*AVG(COUNT(if(t1.user_answer=t1.right_answer, 1,0)) /
+(
+ SELECT COUNT(DISTINCT id)
+ FROM t1
+ group by subject_id
+) * 100 ) AS porcent*/
+
+       $answers = DB::table('answers as t1')->
+        select(DB::raw('
+                t1.*, t2.*,t3.*,
+                t2.name as username, t2.email as useremail, t3.name as subjectname,
+                SUM(IF(t1.user_answer=t1.right_answer,1,0))/(SELECT COUNT(DISTINCT id) FROM answers t1 GROUP BY subject_id)*100 AS porcent,
+                max(time_taken) as time
+            '))
+           ->leftJoin('users as t2', function($join){
+                $join->on('t1.user_id', '=','t2.id');
+            })
+            ->leftJoin('subjects as t3', function($join){
+                $join->on('t1.subject_id', '=','t3.id');
+           })->groupBy('t1.subject_id')->get();
+
+        //dd($answers);
+        //$answers = new Collection($answers);
+        return view("subject.results", compact('title', 'answers'));
+    }
 
     public function getUpdateQuestionResult(){
 

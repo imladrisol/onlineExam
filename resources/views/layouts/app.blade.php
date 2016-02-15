@@ -59,13 +59,17 @@
                             <li><span class="glyphicon glyphicon-cog"></span> <a href="{{action('CategoryController@getIndex')}}">Manager Category</a></li>
                             <li><span class="glyphicon glyphicon-plus"></span> <a href="{{action('CategoryController@getNew')}}">Add Category</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><span class="glyphicon glyphicon-cog"></span> <a href="{{action('SubjectController@getIndex')}}">Manage Subjects</a></li>
-                            <li><span class="glyphicon glyphicon-plus"></span> <a href="{{action('SubjectController@getNew')}}">Add Subjects</a></li>
+                            <li><span class="glyphicon glyphicon-cog"></span> <a href="{{/*action('SubjectController@getIndex')*/route('admin.subject.index')}}">Manage Subjects</a></li>
+                            <li><span class="glyphicon glyphicon-plus"></span> <a href="{{route('subject.new')/*action('SubjectController@getNew')*/}}">Add Subjects</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="{{action('UserController@getIndex')}}">Users</a>
                     </li>
+                    <li>
+                        <a href="{{route('subjects.results')}}">Exams Results</a>
+                    </li>
+
                     @endcan
                     @can('guest')
                     <!--li>

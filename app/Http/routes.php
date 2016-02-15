@@ -21,7 +21,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::controller('category', 'CategoryController');
         //Route::get('subject/{id}/start-test', 'SubjectController@getStartTest');
 
-
+        //Route::get('/','SubjectController@getIndex');
+        Route::get('results', ['as'=>'subjects.results','uses'=>'SubjectController@getAllSubjectsResults']);
+        Route::get('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectsController@getNew']);
         Route::resource('subject', 'SubjectController', ['except' => ['result', 'save-question', 'before-exam', 'start-exam']]);
         Route::controller('user', 'UserController');
     });
