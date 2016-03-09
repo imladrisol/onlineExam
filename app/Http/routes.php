@@ -26,9 +26,12 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('subject', ['as'=>'subject.index', 'uses'=>'SubjectController@getIndex']);
         Route::get('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectController@getNew']);
         Route::get('subject/{id}', ['as'=>'subject.question', 'uses'=>'SubjectController@getQuestions']);
+        Route::post('subject/{id}', ['as'=>'subject.question.post', 'uses'=>'SubjectController@postNewQuestion']);
+        Route::post('subject/{id}/edit', ['as'=>'subject.question.post.edit', 'uses'=>'SubjectController@postEditQuestion']);
         Route::post('subject/new', ['as'=>'subject.question.new', 'uses'=>'SubjectController@postNew']);
         Route::get('subject/{id}/edit', ['as'=>'subject.question.edit', 'uses'=>'SubjectController@getEdit']);
         Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDelete']);
+        Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDeleteQuestion']);
         Route::patch('subject/{id}/edit', ['as'=>'subject.question.patch.edit', 'uses'=>'SubjectController@patchEdit']);
         Route::resource('subject', 'SubjectController', ['except' => ['result', 'save-question', 'before-exam', 'start-exam']]);
         Route::controller('user', 'UserController');

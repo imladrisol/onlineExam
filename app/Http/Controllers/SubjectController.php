@@ -83,8 +83,9 @@ class SubjectController extends Controller
         $title = "Manage questions";
         $answer = ['1'=>1, '2'=>2,'3'=> 3,'4'=> 4];
         $questions = $subject->questions;
+        $title_button = "Save question";
         //dd($questions);
-        return view('subject.questions', compact('subject', 'title', 'answer', 'questions'));
+        return view('subject.questions', compact('subject', 'title', 'answer', 'questions', 'title_button'));
     }
 
 
