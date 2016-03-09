@@ -198,24 +198,6 @@ class SubjectController extends Controller
 
     public function getAllSubjectsResults(){
         $title = 'Exams Results';
-        //$answers = Answer::groupBy('subject_id')->paginate(5);
-
-/*
-        $browser_total_raw = DB::raw(
-            'max(time_taken) as time,
-            if(right_answer = user_answer, )
-            )');
-        $user_info = Answer::
-            select('answers.*', $browser_total_raw)
-            ->groupBy('subject_id')
-            ->get();
-        dd($user_info);*/
-/*AVG(COUNT(if(t1.user_answer=t1.right_answer, 1,0)) /
-(
- SELECT COUNT(DISTINCT id)
- FROM t1
- group by subject_id
-) * 100 ) AS porcent*/
 
        $answers = DB::table('answers as t1')->
         select(DB::raw('
@@ -231,8 +213,6 @@ class SubjectController extends Controller
                 $join->on('t1.subject_id', '=','t3.id');
            })->groupBy('t1.subject_id')->get();
 
-        //dd($answers);
-        //$answers = new Collection($answers);
         return view("subject.results", compact('title', 'answers'));
     }
 
@@ -243,4 +223,13 @@ class SubjectController extends Controller
     public function postUpdateQuestionResult(){
 
     }
+
+    /**
+     * Exporting exams results into Excel
+     */
+
+    /**
+     * user messaging
+     */
 }
+
