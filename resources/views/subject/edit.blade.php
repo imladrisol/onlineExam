@@ -35,7 +35,7 @@
     {!! Form::token() !!}
    <div class="form-group">
        <div class="col-sm-offset-2 col-sm-10">
-            {!! Form::submit('Update category', ['class'=>'btn btn-primary']) !!}
+            {!! Form::submit('Update subject', ['class'=>'btn btn-primary']) !!}
        </div>
    </div>
     {!! Form::close() !!}
