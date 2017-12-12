@@ -12,3 +12,8 @@ create database "forge" on MySQL server.
 User admin:
 e-mail:   admin@gmail.com
 password: admin
+
+
+User:
+e-mail: user1@gmail.com
+password: user1
