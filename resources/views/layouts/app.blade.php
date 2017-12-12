@@ -78,6 +78,7 @@
                     <li class="dropdown">
                         <a href="{{ url('/home') }}" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose exams <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="manager-menu">
+
                             @foreach(App\Subject::all() as $cat)
                                 @if($cat->hasQuestions() && $cat->isExamined())
                                     <li><a href="{{action('SubjectController@getBeforeStartTest',$cat->id)}}">{{$cat->name}}</a></li>
@@ -102,6 +103,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
