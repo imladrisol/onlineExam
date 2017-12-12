@@ -9,3 +9,6 @@ create database "forge" on MySQL server.
 3. php artisan migrate
 4. php artisan db:seed
 
+User admin:
+e-mail:   admin@gmail.com
+password: admin
