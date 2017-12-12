@@ -1,4 +1,4 @@
-Online systen on Laravel 5.2
+Online examination system on Laravel 5.2
 
 1. composer update
 2. php artisan key:generate
