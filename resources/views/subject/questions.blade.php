@@ -27,13 +27,15 @@
         <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> Questions added</div>
 
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <?php $i=0;?>
         @foreach($questions as $question)
 
+            <?php $i++;?>
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="heading{{$question->id}}">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$question->id}}" aria-expanded="false" aria-controls="collapse{{$question->id}}">
-                                Question #{{$question->id}}
+                                Question #{{$i}}
                             </a>
                         </h4>
                     </div>
