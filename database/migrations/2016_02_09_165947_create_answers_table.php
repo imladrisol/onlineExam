@@ -28,6 +28,7 @@ class CreateAnswersTable extends Migration
             $table->text('option3');
             $table->text('option4');
             $table->integer('right_answer');
+            $table->time('time_taken');
             $table->timestamps();
         });
     }

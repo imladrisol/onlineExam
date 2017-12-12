@@ -178,7 +178,7 @@ class SubjectController extends Controller
             'option3' => $question->option3,
             'option4' => $question->option4,
             'right_answer'=>$question->answer,
-                'time_taken'=>$time_per_question
+                'time_taken'=>$time_per_queston
             ]);
         }
 
@@ -224,8 +224,8 @@ class SubjectController extends Controller
                 t2.name as username, t2.email as useremail, t3.name as subjectname,
                 SUM(IF(t1.user_answer=t1.right_answer,1,0))/(
                 SELECT COUNT(DISTINCT id) 
-                FROM answers t1 GROUP BY subject_id)*100 AS porcent/*,
-                max(time_taken) as time*/
+                FROM answers t1 GROUP BY subject_id)*100 AS porcent,
+                max(time_taken) as time
             '))
            ->leftJoin('users as t2', function($join){
                 $join->on('t1.user_id', '=','t2.id');
