@@ -24,11 +24,26 @@ Route::group(['middleware' => 'web'], function () {
         //Route::get('/','SubjectController@getIndex');
         Route::get('results', ['as'=>'subjects.results','uses'=>'SubjectController@getAllSubjectsResults']);
         Route::get('subject', ['as'=>'subject.index', 'uses'=>'SubjectController@getIndex']);
-        Route::get('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectController@getNew']);
+        //Route::get('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectController@getNew']);
+
+        //Route::get('subject/new', 'SubjectController@getNew');
+
         Route::get('subject/{id}', ['as'=>'subject.question', 'uses'=>'SubjectController@getQuestions']);
-        Route::post('subject/{id}', ['as'=>'subject.question.post', 'uses'=>'SubjectController@postNewQuestion']);
+
+        //Route::get('subject/{id}', function (){return 11;});
+
+        //Route::post('subject/{id}', ['as'=>'subject.question.post', 'uses'=>'SubjectController@postNewQuestion']);
+        Route::post('subject/{id}', 'SubjectController@postNewQuestion');
+
         Route::post('subject/{id}/edit', ['as'=>'subject.question.post.edit', 'uses'=>'SubjectController@postEditQuestion']);
         Route::post('subject/new', ['as'=>'subject.question.new', 'uses'=>'SubjectController@postNew']);
+
+
+        //Route::post('subject/new', 'SubjectController@postNew1');
+
+
+
+
         Route::get('subject/{id}/edit', ['as'=>'subject.question.edit', 'uses'=>'SubjectController@getEdit']);
         Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDelete']);
         Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDeleteQuestion']);

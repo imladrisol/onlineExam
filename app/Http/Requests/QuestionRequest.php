@@ -1,16 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imlad
- * Date: 12.12.2017
- * Time: 13:07
- */
 
 namespace App\Http\Requests;
+
 use App\Http\Requests\Request;
 
-class QuestionRequest
+class QuestionRequest extends Request
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
@@ -24,7 +24,7 @@ class QuestionRequest
     public function rules()
     {
         return [
-            'question' => 'required|min:3'
+            //
         ];
     }
 }

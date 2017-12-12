@@ -21,7 +21,6 @@ use phpDocumentor\Reflection\DocBlock\Type\Collection;
 class SubjectController extends Controller
 {
     public function index(){
-
         $subjects = Subject::paginate(5);
         $title = "Subjects Listing";
 
@@ -29,6 +28,7 @@ class SubjectController extends Controller
     }
 
     public function getNew(){
+
         $title = "Create New Subject";
         $categories = Category::lists('name', 'id');
 
@@ -36,6 +36,7 @@ class SubjectController extends Controller
     }
 
     public function postNew(SubjectRequest $req){
+
 
         $subject = new Subject($req->all());
         $category = Category::find($req->input('categories'));
@@ -46,6 +47,7 @@ class SubjectController extends Controller
     }
 
     public function getEdit($id){
+
         $subject = Subject::findOrFail($id);
         $title = "Edit subject '{$subject->name}'";
         $selectedCategoryId = $subject->category()->lists('id')->all();
@@ -55,6 +57,7 @@ class SubjectController extends Controller
     }
 
     public function patchEdit($id, SubjectRequest $req){
+
         if($req->get('status') == null)
             $req['status'] = 0;
 
@@ -72,6 +75,7 @@ class SubjectController extends Controller
     }
 
     public function getDelete($id){
+
         $subject = Subject::findOrFail($id);
         Subject::destroy($id);
         session()->flash('flash_mess', 'Subject  was deleted');
@@ -79,7 +83,9 @@ class SubjectController extends Controller
     }
 
     public function getQuestions($id){
+
         $subject = Subject::findOrFail($id);
+
         $title = "Manage questions";
         $answer = ['1'=>1, '2'=>2,'3'=> 3,'4'=> 4];
         $questions = $subject->questions;
@@ -90,7 +96,11 @@ class SubjectController extends Controller
 
 
     public function postNewQuestion($id, QuestionRequest $req){
+        //dd($req);
+        //$id = $req->input('categories');
+        //dd($id);
         $subj = Subject::find($id);
+        //dd($subj);
         $quest = new Question($req->all());
         //dd($quest);
         $subj->questions()->save($quest);
@@ -99,6 +109,7 @@ class SubjectController extends Controller
     }
 
     public function postEditQuestion($id, QuestionRequest $req){
+
         $question = Question::findOrFail($id);
         $question->update($req->all());
 
@@ -107,6 +118,7 @@ class SubjectController extends Controller
     }
 
     public function getDeleteQuestion($id){
+
         $subj_id = Question::find($id)->subject->id;
         Question::destroy($id);
         session()->flash('flash_mess', 'Question #'.$id.' was deleted');
@@ -115,12 +127,14 @@ class SubjectController extends Controller
     }
 
     public function getBeforeStartTest($id){
+
         $subject = Subject::find($id);
         session()->forget('next_question_id');
         return view('subject.start', compact('subject'));
     }
 
     public function getStartTest($id){
+
         $subject = Subject::find($id);
         $questions = $subject->questions()->get();
         //dd($questions);
@@ -143,6 +157,7 @@ class SubjectController extends Controller
 
     public function postSaveQuestionResult($id, Request $req){
         //save result
+
         $subject = Subject::find($id);
         $question = Question::find($req->get('question_id'));
         if($req->get('option') != null){
@@ -176,6 +191,7 @@ class SubjectController extends Controller
     }
 
     public function getShowResultOfSubjectForGuest($id){
+
         $subject = Subject::findOrFail($id);
         $answers = Answer::whereSubjectId($id)->get();
         if($answers->count()) {
@@ -198,6 +214,7 @@ class SubjectController extends Controller
     }
 
     public function getAllSubjectsResults(){
+
         $title = 'Exams Results';
 
        $answers = DB::table('answers as t1')->
