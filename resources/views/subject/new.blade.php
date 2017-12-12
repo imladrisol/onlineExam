@@ -2,7 +2,7 @@
 
 @section('table_view')
     @include('errors.list')
-    {!! Form::open(['action' => ['SubjectController@postNew'], 'method'=>'post', 'class'=>'form-horizontal']) !!}
+    {!! Form::open(['action' => ['SubjectController@postNewSubject'], 'method'=>'post', 'class'=>'form-horizontal']) !!}
 
     <div class="form-group">
         {!! Form::label('name', 'Name of subject', ['class'=>'col-md-2 control-label']) !!}

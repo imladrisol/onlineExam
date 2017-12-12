@@ -35,7 +35,7 @@ class SubjectController extends Controller
         return view('subject.new', compact('title', 'categories'));
     }
 
-    public function postNew(SubjectRequest $req){
+    public function postNewSubject(SubjectRequest $req){
 
 
         $subject = new Subject($req->all());
@@ -99,6 +99,7 @@ class SubjectController extends Controller
         //dd($req);
         //$id = $req->input('categories');
         //dd($id);
+        //$id=1;
         $subj = Subject::find($id);
         //dd($subj);
         $quest = new Question($req->all());
