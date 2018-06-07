@@ -164,7 +164,7 @@ class SubjectController extends Controller
         if($req->get('option') != null){
             //save the answer into table
             $duration = $subject->duration*60;
-            $time_taken = $req->get('time_taken'.$question->id);
+            $time_taken = ((int)$req->get('time_taken'.$question->id));
             $time_per_question = $duration - $time_taken;
             //dd($time_taken);
             Answer::create([
@@ -178,7 +178,7 @@ class SubjectController extends Controller
             'option3' => $question->option3,
             'option4' => $question->option4,
             'right_answer'=>$question->answer,
-                'time_taken'=>$time_per_queston
+                'time_taken'=>$time_per_question
             ]);
         }
 
@@ -204,7 +204,7 @@ class SubjectController extends Controller
             }
 
             $persetnages = ceil($cnt_right_answ * 100 / $cnt);
-            $time_taken = gmdate("H:i:s", Answer::whereSubjectId($id)->orderBy('id', 'desc')->first()->time_taken);
+            $time_taken = date("H:i:s", strtotime(Answer::whereSubjectId($id)->orderBy('id', 'desc')->first()->time_taken));
             $title = 'Results of test';
             session()->flash('flash_mess', 'Your Exam data has been saved successfully');
             return view('subject.result', compact('subject', 'title', 'cnt', 'cnt_right_answ', 'persetnages', 'time_taken'));
