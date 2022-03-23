@@ -2,9 +2,7 @@
 
 use Illuminate\Contracts\Auth\Access\Gate;
 
-
 Route::group(['middleware' => 'web'], function () {
-
     Route::auth();
     Route::get('/home', function(){
         return redirect('/');
@@ -17,36 +15,14 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/user', function(){
             return view('admin.user');
         });
-
         Route::controller('category', 'CategoryController');
-        //Route::get('subject/{id}/start-test', 'SubjectController@getStartTest');
-
-        //Route::get('/','SubjectController@getIndex');
         Route::get('results', ['as'=>'subjects.results','uses'=>'SubjectController@getAllSubjectsResults']);
         Route::get('subject', ['as'=>'subject.index', 'uses'=>'SubjectController@getIndex']);
         Route::get('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectController@getNew']);
-
-        //Route::get('subject/new', 'SubjectController@getNew');
-
         Route::get('subject/{id}', ['as'=>'subject.question', 'uses'=>'SubjectController@getQuestions']);
-
-        //Route::get('subject/{id}', function (){return 11;});
-
-        //Route::post('subject/{id}', ['as'=>'subject.question.post', 'uses'=>'SubjectController@postNewQuestion']);
-       //
-
         Route::post('subject/{id}/edit', ['as'=>'subject.question.post.edit', 'uses'=>'SubjectController@postEditQuestion']);
         Route::post('subject/new', ['as'=>'subject.new', 'uses'=>'SubjectController@postNewSubject']);
-
         Route::post('subject/{id}', 'SubjectController@postNewQuestion');
-       // Route::post('subject/new', ['as'=>'subject.question.new', 'uses'=>'SubjectController@postNewQuestion']);
-
-
-        //Route::post('subject/new', 'SubjectController@postNew1');
-
-
-
-
         Route::get('subject/{id}/edit', ['as'=>'subject.question.edit', 'uses'=>'SubjectController@getEdit']);
         Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDelete']);
         Route::get('subject/{id}/delete', ['as'=>'subject.question.delete', 'uses'=>'SubjectController@getDeleteQuestion']);
@@ -61,7 +37,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('subject/save-question-result/{id}', ['as'=>'save-question','uses'=>'SubjectController@postSaveQuestionResult']);
         Route::get('subject/{id}/start', ['as'=>'before-exam','uses'=>'SubjectController@getBeforeStartTest']);
         Route::get('subject/{id}/start-test', ['as'=>'start-exam','uses'=>'SubjectController@getStartTest']);
-
     });
 });
 

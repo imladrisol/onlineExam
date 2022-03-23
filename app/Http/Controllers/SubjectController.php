@@ -36,114 +36,80 @@ class SubjectController extends Controller
     }
 
     public function postNewSubject(SubjectRequest $req){
-
-
         $subject = new Subject($req->all());
         $category = Category::find($req->input('categories'));
         $category->subjects()->save($subject);
-
         session()->flash('flash_mess', 'Subject was created completely');
         return redirect(action('SubjectController@getIndex'));
     }
 
     public function getEdit($id){
-
         $subject = Subject::findOrFail($id);
         $title = "Edit subject '{$subject->name}'";
         $selectedCategoryId = $subject->category()->lists('id')->all();
-        //dd($selectedCategoryId);
         $categories = Category::lists('name', 'id');
         return view('subject.edit', compact('subject', 'title', 'categories','selectedCategoryId'));
     }
 
     public function patchEdit($id, SubjectRequest $req){
-
         if($req->get('status') == null)
             $req['status'] = 0;
-
-       // dd($req);
         $subject = Subject::findOrFail($id);
-        //dd($subject);
         $subject->category_id = $req->input('categories');
         $subject->update($req->all());
-        /*$cat = $req->input('categories');
-        $subject->category()->sync($cat);
-        */
-
         session()->flash('flash_mess', 'Subject was changed completely');
         return redirect(action('SubjectController@getEdit', $subject->id));
     }
 
     public function getDelete($id){
-
-        $subject = Subject::findOrFail($id);
         Subject::destroy($id);
         session()->flash('flash_mess', 'Subject  was deleted');
         return redirect(action('SubjectController@getIndex'));
     }
 
     public function getQuestions($id){
-
         $subject = Subject::findOrFail($id);
-
         $title = "Manage questions";
         $answer = ['1'=>1, '2'=>2,'3'=> 3,'4'=> 4];
         $questions = $subject->questions;
         $title_button = "Save question";
-        //dd($questions);
         return view('subject.questions', compact('subject', 'title', 'answer', 'questions', 'title_button'));
     }
 
-
     public function postNewQuestion($id, QuestionRequest $req){
-        //dd($req);
-        //$id = $req->input('categories');
-        //dd($id);
-        //$id=1;
         $subj = Subject::find($id);
-        //dd($subj);
         $quest = new Question($req->all());
-        //dd($quest);
         $subj->questions()->save($quest);
         session()->flash('flash_mess', 'Question was added successfully.');
         return redirect(action('SubjectController@getQuestions', ['id'=>$subj->id]));
     }
 
     public function postEditQuestion($id, QuestionRequest $req){
-
         $question = Question::findOrFail($id);
         $question->update($req->all());
-
         session()->flash('flash_mess', 'Question #'.$question->id.' was changed completely');
         return redirect(action('SubjectController@getQuestions', $question->subject->id));
     }
 
     public function getDeleteQuestion($id){
-
         $subj_id = Question::find($id)->subject->id;
         Question::destroy($id);
         session()->flash('flash_mess', 'Question #'.$id.' was deleted');
         return redirect(action('SubjectController@getQuestions',$subj_id));
-
     }
 
     public function getBeforeStartTest($id){
-
         $subject = Subject::find($id);
         session()->forget('next_question_id');
         return view('subject.start', compact('subject'));
     }
 
     public function getStartTest($id){
-
         $subject = Subject::find($id);
         $questions = $subject->questions()->get();
-        //dd($questions);
         $first_question_id = $subject->questions()->min('id');
-        //dd($first_question_id);
         $last_question_id = $subject->questions()->max('id');
         $duration = $subject->duration;
-        //dd(session('next_question_id'));
         if(session('next_question_id')){
             $current_question_id = session('next_question_id');
         }
@@ -151,22 +117,17 @@ class SubjectController extends Controller
             $current_question_id = $first_question_id;
             session(['next_question_id'=>$current_question_id]);
         }
-        //dd($current_question_id);
         return view('subject.test', compact('subject', 'questions', 'current_question_id', 'first_question_id', 'last_question_id', 'duration'));
     }
 
-
     public function postSaveQuestionResult($id, Request $req){
-        //save result
-
         $subject = Subject::find($id);
         $question = Question::find($req->get('question_id'));
         if($req->get('option') != null){
-            //save the answer into table
+            //save the answer to the table
             $duration = $subject->duration*60;
             $time_taken = ((int)$req->get('time_taken'.$question->id));
             $time_per_question = $duration - $time_taken;
-            //dd($time_taken);
             Answer::create([
                 'user_id'=>Auth::user()->id,
                 'question_id'=>$req->get('question_id'),
@@ -181,18 +142,14 @@ class SubjectController extends Controller
                 'time_taken'=>$time_per_question
             ]);
         }
-
-
         $next_question_id = $subject->questions()->where('id','>',$req->get('question_id'))->min('id');
         if($next_question_id != null) {
             return Response::json(['next_question_id' => $next_question_id]);
-
         }
         return redirect()->route('result',[$id]);
     }
 
     public function getShowResultOfSubjectForGuest($id){
-
         $subject = Subject::findOrFail($id);
         $answers = Answer::whereSubjectId($id)->get();
         if($answers->count()) {
@@ -202,7 +159,6 @@ class SubjectController extends Controller
                 if ($a->user_answer == $a->right_answer)
                     $cnt_right_answ++;
             }
-
             $persetnages = ceil($cnt_right_answ * 100 / $cnt);
             $time_taken = date("H:i:s", strtotime(Answer::whereSubjectId($id)->orderBy('id', 'desc')->first()->time_taken));
             $title = 'Results of test';
@@ -215,10 +171,8 @@ class SubjectController extends Controller
     }
 
     public function getAllSubjectsResults(){
-
         $title = 'Exams Results';
-
-       $answers = DB::table('answers as t1')->
+        $answers = DB::table('answers as t1')->
         select(DB::raw('
                 t1.*, t2.*,t3.*,
                 t2.name as username, t2.email as useremail, t3.name as subjectname,
@@ -236,21 +190,5 @@ class SubjectController extends Controller
 
         return view("subject.results", compact('title', 'answers'));
     }
-
-    public function getUpdateQuestionResult(){
-
-    }
-
-    public function postUpdateQuestionResult(){
-
-    }
-
-    /**
-     * Exporting exams results into Excel
-     */
-
-    /**
-     * user messaging
-     */
 }
 

@@ -29,17 +29,13 @@ class CategoryController extends Controller
 
     public function getEdit($id){
         $category = Category::findOrFail($id);
-        //dd($category);
         $title = "Edit Category '{$category->name}'";
         return view('category.edit', compact('category', 'title'));
     }
 
     public function patchEdit($id, CategoryRequest $req){
-        //dd($req->get('status'));
         if($req->get('status') == null)
             $req['status'] = 0;
-
-        //dd($req);
         $category = Category::findOrFail($id);
         $category->update($req->all());
         session()->flash('flash_mess', 'Category was changed completely');
