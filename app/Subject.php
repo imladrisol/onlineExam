@@ -17,12 +17,11 @@ class Subject extends Model
     }
 
     public function hasQuestions(){
+        $res = false;
         if($this->questions()->get()->count()){
-            return true;
+            $res = true;
         }
-        else{
-            return false;
-        }
+        return $res;
     }
 
     public function answers(){
@@ -30,9 +29,10 @@ class Subject extends Model
     }
 
     public function isExamined(){
+        $res = true;
         if($this->answers()->get()->count()){
-            return false;
+            $res = false;
         }
-        return true;
+        return $res;
     }
 }

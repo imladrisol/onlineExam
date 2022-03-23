@@ -32,21 +32,12 @@ class User extends Authenticatable
         return $this->roles()->save($role);
     }
 
-    //$user->hasRole('manager')
     public function hasRole($role){
-
         foreach($this->roles()->get() as $role1){
             if($role1->name == $role->name){
                 return true;
             }
         }
-
-  /*      foreach ($role as $r) {
-            if($this->hasRole($r->name)){
-                return true;
-            }
-        }
-*/
 
         return false;
     }
